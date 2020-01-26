@@ -1,0 +1,10 @@
+---
+
+- name: Get Raspberry Pi type
+  shell: "raspi-config nonint get_pi_type"
+  register: pi_type
+  changed_when: False
+
+- name: Show pi version
+  debug:
+    msg: "Pi version: {{ pi_type.stdout }}"
