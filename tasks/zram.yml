@@ -1,0 +1,12 @@
+---
+
+- name: Clone zram-config project
+  git:
+    repo: https://github.com/StuartIanNaylor/zram-config.git
+    dest: /tmp/zram-config
+
+- name: Run the install script
+  become: true
+  script: /tmp/zram-config/install.sh
+  args:
+    executable: sh

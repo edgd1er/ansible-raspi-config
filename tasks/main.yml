@@ -7,6 +7,11 @@
     upgrade: dist
   when: raspi_config_update_packages
 
+- name: Set up zram
+  import_tasks: zram.yml
+  notify:
+    - reboot
+
 - name: sets the timezone
   timezone:
     name: "{{ raspi_config_timezone }}"
@@ -37,12 +42,7 @@
     - apply raspi-config
     - reboot
 
-- name: set camera state
-  import_tasks: camera.yml
-- name: set additional config vars
-  pi_boot_config:
-  args:
-    config_vals: "{{ raspi_config_other_options }}"
+- name: Disable services
+  import_tasks: disable-services.yml
   notify:
-    - apply raspi-config
     - reboot
