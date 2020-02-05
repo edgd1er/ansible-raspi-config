@@ -7,6 +7,5 @@
 
 - name: Run the install script
   become: true
-  script: /tmp/zram-config/install.sh
-  args:
-    executable: sh
+  command:
+    cmd: /tmp/zram-config/install.sh

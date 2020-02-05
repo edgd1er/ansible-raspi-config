@@ -43,7 +43,7 @@
     - reboot
 
 - name: Configure network options
-  import_tasks: network-options
+  import_tasks: raspi-config-2-network-options
 
 - name: Disable services
   import_tasks: disable-services.yml
