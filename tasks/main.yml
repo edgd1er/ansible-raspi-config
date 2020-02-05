@@ -14,7 +14,7 @@
 
 - name: sets the timezone
   timezone:
-    name: "{{ raspi_config_timezone }}"
+    name: "{{ raspi_config_localisation_timezone }}"
   notify: restart timezone dependent services
 
 - import_tasks: setup_replace_user.yml
@@ -43,7 +43,7 @@
     - reboot
 
 - name: Configure network options
-  import_tasks: raspi-config-2-network-options
+  import_tasks: raspi-config-2-network-options.yml
 
 - name: Disable services
   import_tasks: disable-services.yml
