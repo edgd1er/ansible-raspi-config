@@ -36,19 +36,15 @@ raspi_config_ensure_optimal_cpu_params: true
 # 1. User Password
 
 # 2. Network Options
-
-# set hostname
 raspi_config_network_hostname: pi
 raspi_config_network_netnames: no
 
 # 3. Boot Options
-
 raspi_config_boot_behaviour: "B1" #B1 cli, B2 cli autologin, B3 desktop, B4 desktop autologin
 raspi_config_boot_wait: no #False
 raspi_config_boot_splash: no #False
 
 # 4. Localisation Options
-
 # set global locale
 raspi_config_localisation_locale: 'en_AU.UTF-8'
 # set timezone
@@ -61,7 +57,6 @@ raspi_config_localisation_keyboard_layout: "us" #default "gb"
 raspi_config_localisation_wifi_country: "AU"
 
 # 5. Interfacing Options
-
 raspi_config_interface_enable_camera: no
 raspi_config_interface_enable_ssh: yes
 raspi_config_interface_enable_vnc: no
@@ -72,17 +67,16 @@ raspi_config_interface_enable_onewire: no
 raspi_config_interface_enable_rgpio: no
 
 # 6. Overclock Options
+raspi_config_overclock: no
 
 # 7. Advanced Options
-
 # have the FS fill the SD card
-raspi_config_expanded_filesystem: true
+raspi_config_expanded_filesystem: yes
 raspi_config_advanced_overscan: no # False
 # how much memory should be owned by the GPU (vs RAM)
 raspi_config_memory_split_gpu: 16
 raspi_config_advanced_audio_out: "0" #0 Auto, 1 Force 3.5mm, 2 Force hdmi
 raspi_config_advanced_pixel_doubling: no
-raspi_config_advanced_gldriver: False #G1 Full KMS, G2 Fake KMS, G3 Legacy
-raspi_config_OVERCLOCK: False
-raspi_config_HDMI_GROUP: False
-raspi_config_HDMI_MOD: False
+raspi_config_advanced_gldriver: no # False #G1 Full KMS, G2 Fake KMS, G3 Legacy
+raspi_config_advanced_hdmi_group: no # False
+raspi_config_advanced_hdmi_mod: no # False

@@ -1,8 +1,8 @@
 ---
 
-#2 Network Options
+# 2 Network Options
 
-#N1 Hostname
+# N1 Hostname
 - name: Get hostname
   shell: "raspi-config nonint get_hostname"
   register: pi_hostname
@@ -16,11 +16,11 @@
   shell: "raspi-config nonint do_hostname {{ raspi_config_network_hostname }}"
   when: pi_hostname.stdout != raspi_config_network_hostname
 
-#N2 Wi-fi
+# N2 Wi-fi
 #- name: Set WiFi credentials
   #shell: "raspi-config nonint do_wifi_ssid_passphrase {{ SSID }} {{ PASSPHRASE }}"
 
-#N3 Network interface names
+# N3 Network interface names
 - name: Get network names status
   shell: "raspi-config nonint get_net_names"
   register: pi_netnames

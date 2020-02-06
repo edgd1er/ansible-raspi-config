@@ -1,8 +1,8 @@
 ---
 
-#3 Boot Options
+# 3 Boot Options
 
-#B1 Desktop / CLI
+# B1 Desktop / CLI
 - name: Get boot CLI
   shell: "raspi-config nonint get_boot_cli"
   register: boot_cli
@@ -21,11 +21,11 @@
   debug:
     msg: "Boot autologin is: {{ auto_login.stdout }}"
 
-#B1 cli, B2 cli autologin, B3 desktop, B4 desktop autologin
+# B1 cli, B2 cli autologin, B3 desktop, B4 desktop autologin
 - name: Set Boot behaviour
   shell: "raspi-config nonint do_boot_behaviour {{ raspi_config_boot_behaviour }}"
 
-#B2 Wait for Network at Boot
+# B2 Wait for Network at Boot
 - name: Get boot wait for network status
   shell: "raspi-config nonint get_boot_wait"
   register: boot_wait
@@ -38,7 +38,7 @@
 #- name: Set boot wait network status
   #shell: "raspi-config nonint do_boot_wait {{ raspi_config_boot_wait }}"
 
-#B3 Splash Screen
+# B3 Splash Screen
 - name: Get splash status
   shell: "raspi-config nonint get_boot_splash"
   register: boot_splash

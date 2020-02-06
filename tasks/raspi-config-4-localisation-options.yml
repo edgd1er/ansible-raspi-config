@@ -1,25 +1,25 @@
 ---
 
-#4 Localisation Options
+# 4 Localisation Options
 
-#I1 Change Locale
+# I1 Change Locale
 - name: Change locale
   shell: "raspi-config nonint do_change_locale {{ raspi_config_localisation_locale }}"
 
-#I2 Change Timezone
+# I2 Change Timezone
 - name: Change timezone
   shell: "raspi-config nonint do_change_timezone {{ raspi_config_localisation_timezone }}"
 
-#I3 Change Keyboard Layout
+# I3 Change Keyboard Layout
 - name: Change keyboard layout
   shell: "raspi-config nonint do_configure_keyboard {{ raspi_config_localisation_keyboard_layout }}"
 
-#I4 Change Wi-fi Country
+# I4 Change Wi-fi Country
 - name: Get WiFi country
   shell: "raspi-config nonint get_wifi_country"
   register: wifi_country
   changed_when: False
-  ignore_errors: True #to avoid error when WiFi is not present
+  ignore_errors: yes #to avoid error when WiFi is not present
 
 - name: Print current WiFi country
   debug:

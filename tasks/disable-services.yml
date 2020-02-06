@@ -5,11 +5,11 @@
   blockinfile:
     path: /boot/config.txt
     insertafter: EOF
-    backup: yes
+    # backup: yes
     block: |
       # Disable Bluetooth
       dtoverlay=pi3-disable-bt
-  when: raspi_config_unwanted_services is defined and bluetooth in raspi_config_unwanted_services
+  when: raspi_config_unwanted_services is defined and 'bluetooth' in raspi_config_unwanted_services
 
 - name: Disable bluetooth services
   become: yes
@@ -18,7 +18,7 @@
     state: stopped
     enabled: no
   loop: "{{ raspi_config_bluetooth_services }}"
-  when: raspi_config_unwanted_services is defined and bluetooth in raspi_config_unwanted_services
+  when: raspi_config_unwanted_services is defined and 'bluetooth' in raspi_config_unwanted_services
 
 - name: Disable unwanted services
   become: yes
