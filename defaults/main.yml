@@ -48,7 +48,7 @@ raspi_config_boot_splash: no #False
 # set global locale
 raspi_config_localisation_locale: 'en_AU.UTF-8'
 # set timezone
-raspi_config_localisation_timezone: UTC #i.e. UTC, Europe/London, Australia/Adelaide
+raspi_config_localisation_timezone: Australia/Adelaide #i.e. UTC, Europe/London, Australia/Adelaide
 # list of services that should be restarted if the timezone is changed
 raspi_config_localisation_timezone_dependent_services: []
 # set keyboard layout
