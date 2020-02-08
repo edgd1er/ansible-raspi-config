@@ -1,0 +1,17 @@
+---
+
+# - name: Assert an arm
+
+
+# - name: Assert debian
+
+
+- name: Assert raspi-config exists
+  stat:
+    path: /usr/bin/raspi-config
+  register: stat_result
+
+- name: Assert raspi-config exists
+  assert:
+    that:
+      stat_result.stat.exists
