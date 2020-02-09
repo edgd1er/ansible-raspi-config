@@ -13,6 +13,7 @@
 
 - name: Disable bluetooth services
   become: yes
+  ignore_errors: yes
   systemd:
     name: "{{ item }}"
     state: stopped
@@ -22,6 +23,7 @@
 
 - name: Disable unwanted services
   become: yes
+  ignore_errors: yes
   systemd:
     name: "{{ item }}"
     state: stopped
