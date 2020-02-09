@@ -18,19 +18,19 @@
 # ],
 
 - name: Assert an ARM processor
-  asset:
+  assert:
     that:
-      ansible_architecture.find('v=' ~ arm) == -1
+      ansible_architecture.find('v=' ~ 'arm') == -1
 
 - name: Assert distribution is Debian type
-  asset:
+  assert:
     that:
-      ansible_distribution.find('v=' ~ Debian) == -1
+      ansible_distribution.find('v=' ~ 'Debian') == -1
 
 - name: Assert OS is Raspbian
-  asset:
+  assert:
     that:
-      ansible_lsb.id.find('v=' ~ Raspbian) == -1
+      ansible_lsb.id.find('v=' ~ 'Raspbian') == -1
 
 - name: Assert raspi-config exists
   stat:
