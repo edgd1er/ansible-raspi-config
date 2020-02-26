@@ -20,6 +20,12 @@
     name: "{{ raspi_config_localisation_timezone }}"
   notify: restart timezone dependent services
 
+- include_tasks: setup_create_user.yml
+  when: raspi_config_create_users is defined and ( raspi_config_create_users | length > 0 )
+  loop: "{{ raspi_config_create_users }}"
+  loop_control:
+    loop_var: raspi_config_create_user
+
 - import_tasks: setup_replace_user.yml
   when: raspi_config_replace_user['name'] != None
 
