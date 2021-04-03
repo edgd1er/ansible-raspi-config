@@ -1,11 +1,22 @@
 ---
 
+# Based on https://ikarus.sg/using-zram-to-get-more-out-of-your-raspberry-pi/
+
 - name: Clone zram-config project
-  git:
-    repo: https://github.com/StuartIanNaylor/zram-config.git
-    dest: /tmp/zram-config
+  ansible.builtin.git:
+    repo: 'https://github.com/StuartIanNaylor/zram-swap-config.git'
+    dest: /tmp/zram-swap-config
 
 - name: Run the install script
   become: true
-  command:
-    cmd: /tmp/zram-config/install.sh
+  ansible.builtin.command:
+    cmd: /tmp/zram-swap-config/install.sh
+
+- name: Cleanup installation files
+  ansible.builtin.file:
+    path: /tmp/zram-swap-config
+    state: absent
+
+- name: Disable default swap device
+  ansible.builtin.command:
+    cmd: 'dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile disable'
