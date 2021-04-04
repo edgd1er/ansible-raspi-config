@@ -10,7 +10,7 @@
 - name: Install log2ram
   become: yes
   ansible.builtin.command:
-    cmd: /tmp/log2ram/install.sh
+    cmd: 'cd /tmp/log2ram && ./install.sh'
 
 - name: Cleanup installation files
   ansible.builtin.file:

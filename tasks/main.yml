@@ -2,7 +2,10 @@
 # tasks file for ansible-role-raspi-config
 
 - name: Assert remote is an RPi in expected state
-  import_tasks: asserts.yml
+  ansible.builtin.import_tasks: asserts.yml
+
+- name: Get RPi version
+  ansible.builtin.import_tasks: get-info.yml
 
 - name: update all packages
   ansible.builtin.apt:
