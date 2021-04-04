@@ -2,6 +2,21 @@
 
 # Based on https://ikarus.sg/using-zram-to-get-more-out-of-your-raspberry-pi/
 
+- name: Check status of zram-swap-config service
+  ansible.builtin.service_facts:
+  register: service_state
+
+- name: Find state
+  ansible.builtin.debug:
+    var: service_state.ansible_facts.services["zram-swap-config.service"].state
+
+- name: Stop zram-swap-config service
+  become: yes
+  service:
+    name: zram-swap-config
+    state: stopped
+  when: service_state.ansible_facts.services["zram-swap-config.service"].state
+
 - name: Clone zram-config project
   ansible.builtin.git:
     repo: 'https://github.com/StuartIanNaylor/zram-swap-config.git'
