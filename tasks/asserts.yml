@@ -32,7 +32,7 @@
     that:
       ansible_lsb.id.find('v=' ~ 'Raspbian') == -1
 
-- name: Assert raspi-config exists
+- name: Check raspi-config
   ansible.builtin.stat:
     path: /usr/bin/raspi-config
   register: stat_result
