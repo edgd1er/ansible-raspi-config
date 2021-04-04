@@ -9,7 +9,9 @@
 
 - name: Run the install script
   become: true
-  ansible.builtin.command: "cd /tmp/zram-swap-config && ./install.sh"
+  ansible.builtin.command: ./install.sh
+  args:
+    chdir: /tmp/zram-swap-config
 
 - name: Cleanup installation files
   ansible.builtin.file:
