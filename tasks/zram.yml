@@ -1,6 +1,7 @@
 ---
 
-# Based on https://ikarus.sg/using-zram-to-get-more-out-of-your-raspberry-pi/
+# Based on
+# https://ikarus.sg/using-zram-to-get-more-out-of-your-raspberry-pi/
 
 - name: Populate service facts
   ansible.builtin.service_facts:
