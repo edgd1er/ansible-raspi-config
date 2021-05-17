@@ -1,54 +1,68 @@
 ---
+# tasks file for ansible-role-raspi-config
+
+- name: Assert remote is an RPi in expected state
+  ansible.builtin.import_tasks: asserts.yml
+
+- name: Get RPi version
+  ansible.builtin.import_tasks: get-info.yml
 
 - name: update all packages
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     upgrade: dist
   when: raspi_config_update_packages
 
-- name: sets the timezone
-  timezone:
-    name: "{{ raspi_config_timezone }}"
-  notify: restart timezone dependent services
-
-- import_tasks: setup_replace_user.yml
-  when: raspi_config_replace_user['name'] != None
-
-- import_tasks: security_check.yml
-
-- name: ensure filesystem is resized
-  expand_fs:
-  when: raspi_config_expanded_filesystem
-  register: expand_fs_output
-
-- name: filesystem expand non-action check
-  debug:
-    msg: "{{ expand_fs_output.stderr }}"
-  when: "raspi_config_expanded_filesystem and expand_fs_output.stderr.startswith('WARN')"
-  changed_when: "True"      # for highlighting purposes
-
-- name: ensure mem split
-  pi_boot_config:
-    config_vals: "gpu_mem={{ raspi_config_memory_split_gpu }}"
+- name: Set up zram
+  ansible.builtin.import_tasks: zram.yml
   notify:
-    - apply raspi-config
     - reboot
 
-- name: ensure correct CPU parameters for Pi2
-  ensure_pi2_oc:
-  args:
-    cpu_types: "{{ raspi_config_pi_cpu }}"
-  when: raspi_config_ensure_optimal_cpu_params
+- name: Set up log2ram
+  ansible.builtin.import_tasks: log2ram.yml
   notify:
-    - apply raspi-config
     - reboot
 
-- name: set camera state
-  import_tasks: camera.yml
-- name: set additional config vars
-  pi_boot_config:
-  args:
-    config_vals: "{{ raspi_config_other_options }}"
+# - name: sets the timezone
+#   timezone:
+#     name: "{{ raspi_config_localisation_timezone }}"
+#   notify: restart timezone dependent services
+
+# - include_tasks: setup_create_user.yml
+#   when: raspi_config_create_users is defined and ( raspi_config_create_users | length > 0 )
+#   loop: "{{ raspi_config_create_users }}"
+#   loop_control:
+#     loop_var: raspi_config_create_user
+
+# - import_tasks: setup_replace_user.yml
+#   when: raspi_config_replace_user['name'] != None
+
+# - import_tasks: security_check.yml
+
+# - name: ensure filesystem is resized
+#   expand_fs:
+#   when: raspi_config_expanded_filesystem
+
+# - name: ensure mem split
+#   pi_boot_config:
+#     config_vals: "gpu_mem={{ raspi_config_memory_split_gpu }}"
+#   notify:
+#     - apply raspi-config
+#     - reboot
+
+# - name: ensure correct CPU parameters for Pi2
+#   ensure_pi2_oc:
+#   args:
+#     cpu_types: "{{ raspi_config_pi_cpu }}"
+#   when: raspi_config_ensure_optimal_cpu_params
+#   notify:
+#     - apply raspi-config
+#     - reboot
+
+# - name: Configure network options
+#   import_tasks: raspi-config-2-network-options.yml
+
+- name: Disable services
+  ansible.builtin.import_tasks: disable-services.yml
   notify:
-    - apply raspi-config
     - reboot
