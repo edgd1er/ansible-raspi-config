@@ -52,15 +52,15 @@ raspi_config_boot_splash: no #False
 
 # 4. Localisation Options
 # set global locale
-raspi_config_localisation_locale: 'en_AU.UTF-8'
+raspi_config_localisation_locale: 'fr_FR.UTF-8'
 # set timezone
-raspi_config_localisation_timezone: Australia/Adelaide #i.e. UTC, Europe/London, Australia/Adelaide
+raspi_config_localisation_timezone: Europe/Paris #i.e. UTC, Europe/London, Australia/Adelaide
 # list of services that should be restarted if the timezone is changed
 raspi_config_localisation_timezone_dependent_services: []
 # set keyboard layout
-raspi_config_localisation_keyboard_layout: "us" #default "gb"
+raspi_config_localisation_keyboard_layout: "fr" #default "gb"
 # set Wifi country
-raspi_config_localisation_wifi_country: "AU"
+raspi_config_localisation_wifi_country: "FR"
 
 # 5. Interfacing Options
 raspi_config_interface_enable_camera: no
@@ -74,6 +74,11 @@ raspi_config_interface_enable_rgpio: no
 
 # 6. Overclock Options
 raspi_config_overclock: no
+#see https://www.raspberrypi.org/documentation/configuration/config-txt/overclocking.md
+#https://haydenjames.io/raspberry-pi-2-overclock/
+#https://haydenjames.io/raspberry-pi-3-overclock/
+#https://magpi.raspberrypi.org/articles/how-to-overclock-raspberry-pi-4
+#OVERCLOCK:
 
 # 7. Advanced Options
 # have the FS fill the SD card
@@ -86,3 +91,4 @@ raspi_config_advanced_pixel_doubling: no
 raspi_config_advanced_gldriver: no # False #G1 Full KMS, G2 Fake KMS, G3 Legacy
 raspi_config_advanced_hdmi_group: no # False
 raspi_config_advanced_hdmi_mod: no # False
+raspi_config_interface_vnc: no
