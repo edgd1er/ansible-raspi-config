@@ -54,7 +54,7 @@
 
 - name: Print current GPU memory split
   debug:
-    msg: "Expected: {{ raspi_config_memory_split_gpu } - Current GPU memory split: {{ gpu_mem.stdout }} - {{ gpu_mem_256.stdout }} - {{ gpu_mem_512.stdout }} - {{ gpu_mem_1k.stdout }}"
+    msg: "Expected: {{ raspi_config_memory_split_gpu }} - Current GPU memory split: {{ gpu_mem.stdout }} - {{ gpu_mem_256.stdout }} - {{ gpu_mem_512.stdout }} - {{ gpu_mem_1k.stdout }}"
 
 - name: Set GPU memory split
   shell: "raspi-config nonint do_memory_split {{ raspi_config_memory_split_gpu }}"
@@ -100,6 +100,37 @@
 - name: Disable pixel doubling
   shell: "raspi-config nonint do_onewire 1"
   when: (not raspi_config_advanced_pixel_doubling) and (pixdub_status.stdout != '1')
+
+- name: Get swapfile status
+  command: "swapon --noheadings --show=Size"
+  register: swapon_size
+  changed_when: False
+
+- name: Print swapfile status
+  debug:
+    msg: "swapfile size is: {{ swapon_size.stdout }}"
+
+- name: Disable default swap device
+  ansible.builtin.shell: "{{ item }}"
+  args:
+    warn: false # set warn=false to prevent warning
+  with_items:
+    - /bin/sed -i -E 's/(CONF_SWAPSIZE=)(.*)/\10/g' /etc/dphys-swapfile
+    - /sbin/dphys-swapfile swapoff
+    - /sbin/dphys-swapfile uninstall
+    - /usr/sbin/update-rc.d dphys-swapfile remove
+  when: (raspi_config_advanced_swapfile == 0) and (swapon_size.stdout != '')
+
+- name: Enable default swap device
+  shell: "{{ item }}"
+  args:
+    warn: false # set warn=false to prevent warning
+  with_items:
+    - /bin/sed -i -E 's/(CONF_SWAPSIZE=)(.*)/\1100/g' /etc/dphys-swapfile
+    - /sbin/dphys-swapfile swapon
+    - /sbin/dphys-swapfile install
+    - /usr/sbin/update-rc.d dphys-swapfile install
+  when: (raspi_config_advanced_swapfile == 1) and (swapfile_size.stdout == '')
 
 # A7 GL Driver
 #- name: Set OpenGL desktop driver

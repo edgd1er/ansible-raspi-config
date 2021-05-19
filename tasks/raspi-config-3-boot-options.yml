@@ -51,7 +51,7 @@
 - name: Set boot splash
   shell: "raspi-config nonint do_boot_splash {{ raspi_config_boot_splash }}"
   when: boot_splash.stdout != raspi_config_boot_splash
-  ignoez
+  ignore_errors: true
 
 - name: ensure correct CPU parameters for Pi2
   ensure_pi2_oc:
