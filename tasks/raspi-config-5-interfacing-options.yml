@@ -50,11 +50,13 @@
 
 - name: Enable VNC
   shell: "raspi-config nonint do_vnc 0"
-  when: (raspi_config_interface_vnc) and (vnc_status.stdout != '0')
+  when: raspi_config_interface_vnc and (vnc_status.stdout != '0')
+  ignore_errors: yes #to avoid error when var is not set
 
 - name: Disable VNC
   shell: "raspi-config nonint do_vnc 1"
   when: (not raspi_config_interface_vnc) and (vnc_status.stdout != '1')
+  ignore_errors: yes #to avoid error when var is not set
 
 # P4 SPI
 - name: Get SPI status
@@ -86,7 +88,7 @@
 
 - name: Enable I2C
   shell: "raspi-config nonint do_i2c 0"
-  when: (raspi_config_interface_enable_i2c) and (i2c_status.stdout != '0')
+  when: raspi_config_interface_enable_i2c and (i2c_status.stdout != '0')
 
 - name: Disable I2C
   shell: "raspi-config nonint do_i2c 1"

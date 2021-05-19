@@ -4,17 +4,17 @@
 
 # N1 Hostname
 - name: Get hostname
-  shell: "raspi-config nonint get_hostname"
+  command: "raspi-config nonint get_hostname"
   register: pi_hostname
   changed_when: False
 
 - name: Print current hostname
   debug:
-    msg: "Current hostname: {{ pi_hostname.stdout }}"
+    msg: "Current hostname: {{ pi_hostname.stdout }}, should be {{ inventory_hostname }}"
 
 - name: Change hostname
-  shell: "raspi-config nonint do_hostname {{ raspi_config_network_hostname }}"
-  when: pi_hostname.stdout != raspi_config_network_hostname
+  command: "raspi-config nonint do_hostname {{ inventory_hostname }}"
+  when: pi_hostname.stdout != inventory_hostname
 
 # N2 Wi-fi
 #- name: Set WiFi credentials
@@ -22,7 +22,7 @@
 
 # N3 Network interface names
 - name: Get network names status
-  shell: "raspi-config nonint get_net_names"
+  command: "raspi-config nonint get_net_names"
   register: pi_netnames
   changed_when: False
 
@@ -31,9 +31,9 @@
     msg: "Current network names status: {{ pi_netnames.stdout }}"
 
 - name: Enable network names
-  shell: "raspi-config nonint do_net_names 0"
-  when: (raspi_config_network_netnames) and (pi_netnames.stdout != '0')
+  command: "raspi-config nonint do_net_names 0"
+  when: raspi_config_network_netnames and (pi_netnames.stdout != '0')
 
 - name: Disable network names
-  shell: "raspi-config nonint do_net_names 1"
-  when: (raspi_config_network_netnames) and (pi_netnames.stdout != '1')
+  command: "raspi-config nonint do_net_names 1"
+  when: (not raspi_config_network_netnames ) and (pi_netnames.stdout != '1')

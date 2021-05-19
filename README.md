@@ -1,12 +1,22 @@
 raspi_config
 =========
 
+Forked from https://github.com/mikolak-net/ansible-raspi-config.git
+
 [![Ansible Role](https://img.shields.io/ansible/role/30050.svg?style=plastic)](https://galaxy.ansible.com/mikolak-net/raspi-config/) [![Ansible Role](https://img.shields.io/ansible/role/d/30050.svg?style=plastic)](https://galaxy.ansible.com/mikolak-net/raspi-config/)
 
 A configuration role for Raspbian-based Raspberry Pi machines. Provides the following features:
  - exposes and/or emulates those `raspi-config` options that are most relevant to headless servers (see _Rule Variables_),
  - allows to add user-specified settings to `/boot/config.txt` via the `raspi_config_other_options` variable,
  - warns about leaving the default credentials accessible.
+
+Additions
+----------
+
+- hostname is set from inventory_hostname
+- raspberry is completely redefined (network, boot-config, internationalisation, interfaces(spi,1Wire, etc), overclock,
+  advanced (hdmi, overscan, gpu mem split ))
+
 
 Requirements
 ------------

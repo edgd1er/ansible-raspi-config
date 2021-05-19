@@ -48,7 +48,7 @@ raspi_config_network_netnames: no
 # 3. Boot Options
 raspi_config_boot_behaviour: "B1" #B1 cli, B2 cli autologin, B3 desktop, B4 desktop autologin
 raspi_config_boot_wait: no #False
-raspi_config_boot_splash: no #False
+raspi_config_boot_splash: "0" #0 Auto, 1 Force 3.5mm, 2 Force hdmi
 
 # 4. Localisation Options
 # set global locale
@@ -86,7 +86,6 @@ raspi_config_expanded_filesystem: yes
 raspi_config_advanced_overscan: no # False
 # how much memory should be owned by the GPU (vs RAM)
 raspi_config_memory_split_gpu: 16
-raspi_config_advanced_audio_out: "0" #0 Auto, 1 Force 3.5mm, 2 Force hdmi
 raspi_config_advanced_pixel_doubling: no
 raspi_config_advanced_gldriver: no # False #G1 Full KMS, G2 Fake KMS, G3 Legacy
 raspi_config_advanced_hdmi_group: no # False

@@ -15,6 +15,7 @@
 
 - name: Expand Filesystem
   shell: "raspi-config nonint do_expand_rootfs"
+  when: raspi_config_expanded_filesystem and ( fs_filled.stdout == '0' )
 
 # A2 Overscan
 - name: Get Overscan status
@@ -53,11 +54,11 @@
 
 - name: Print current GPU memory split
   debug:
-    msg: "Current GPU memory split: {{ gpu_mem.stdout }} - {{ gpu_mem_256.stdout }} - {{ gpu_mem_512.stdout }} - {{ gpu_mem_1k.stdout }}"
+    msg: "Expected: {{ raspi_config_memory_split_gpu } - Current GPU memory split: {{ gpu_mem.stdout }} - {{ gpu_mem_256.stdout }} - {{ gpu_mem_512.stdout }} - {{ gpu_mem_1k.stdout }}"
 
 - name: Set GPU memory split
-  shell: "raspi-config nonint do_memory_split {{ MEMSPLIT }}"
-  #when: gpu_mem.stdout != MEMSPLIT
+  shell: "raspi-config nonint do_memory_split {{ raspi_config_memory_split_gpu }}"
+  when: gpu_mem.stdout != raspi_config_memory_split_gpu
 
 # A4 Audio
 ### 0 Auto, 1 Force 3.5mm, 2 Force hdmi

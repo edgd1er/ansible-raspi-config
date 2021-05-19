@@ -46,7 +46,18 @@
 
 - name: Print boot splash status
   debug:
-    msg: "Boot splash status is: {{ boot_splash.stdout }}"
+    msg: "Boot splash status is: {{ boot_splash.stdout }}, expected {{ raspi_config_boot_splash }}"
 
-  #- name: Set boot splash
-  #shell: "raspi-config nonint do_boot_splash {{ raspi_config_boot_splash }}"
+- name: Set boot splash
+  shell: "raspi-config nonint do_boot_splash {{ raspi_config_boot_splash }}"
+  when: boot_splash.stdout != raspi_config_boot_splash
+  ignoez
+
+- name: ensure correct CPU parameters for Pi2
+  ensure_pi2_oc:
+  args:
+    cpu_types: "{{ raspi_config_pi_cpu }}"
+  when: raspi_config_ensure_optimal_cpu_params
+  notify:
+    - apply raspi-config
+    - reboot
