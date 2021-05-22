@@ -18,6 +18,9 @@ raspi_config_replace_user:
 #        - { name: 'piaware', path_to_ssh_key: "{{ playbook_dir }}/../../ssh_keys/{{ raspi_config_hostname }}.pub" }
 raspi_config_create_users:
 
+# wait this many seconds before forcing connection retry after reboot
+raspi_config_reboot_max_wait_time: 300
+
 raspi_config_bluetooth_services: [
   bluetooth,
   bluealsa,
@@ -90,7 +93,11 @@ raspi_config_advanced_hdmi_mod: no # False
 raspi_config_advanced_audio_out: 0 #0 Auto #1 Force 3.5mm jack #2 Force HDMI
 raspi_config_advanced_swapfile: 1 #0 to disable swap file
 
-#Number of seconds to wait before starting to poll
-raspi_config_reboot_min_time: 5
-# wait this many seconds before forcing connection retry after reboot
-raspi_config_reboot_max_wait_time: 300
+#Zram
+# Based on
+# https://ikarus.sg/using-zram-to-get-more-out-of-your-raspberry-pi/
+zram: false
+
+#log2ram:
+# Based on https://levelup.gitconnected.com/extend-the-lifespan-of-your-raspberry-pis-sd-card-with-log2ram-5929bf3316f2
+log2ram: false

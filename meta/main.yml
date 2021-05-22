@@ -12,7 +12,4 @@ galaxy_info:
     - development
     - system
 
-dependencies: [ ]
-
-collections:
-  - name: ansible.posix.authorized_keys
+dependencies: []
