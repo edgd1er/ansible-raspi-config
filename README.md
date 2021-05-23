@@ -16,10 +16,12 @@ Additions
 - hostname is set from inventory_hostname
 - raspberry is completely redefined (network, boot-config, internationalisation, interfaces(spi,1Wire, etc), overclock,
   advanced (hdmi, overscan, gpu mem split ))
-
+- log2ram and zram are available for selection
 
 Requirements
 ------------
+
+`pip3 install "ansible-lint[core,yamllint]"`
 
 None, other than installing the role itself. To do that, create a `requirements.yml` file next to your playbook with
 the following contents:

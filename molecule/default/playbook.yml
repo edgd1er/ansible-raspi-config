@@ -2,4 +2,4 @@
 - name: Converge
   hosts: all
   roles:
-    - role: ansible-role-raspi-config
+    - role: mikolaj_net.raspi_config
