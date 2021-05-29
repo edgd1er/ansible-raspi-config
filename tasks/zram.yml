@@ -24,6 +24,7 @@
   ansible.builtin.git:
     repo: 'https://github.com/StuartIanNaylor/zram-swap-config.git'
     dest: /tmp/zram-swap-config
+    version: latest
 
 - name: Run the install script
   become: true
@@ -38,6 +39,14 @@
   ansible.builtin.debug:
     var: zramres.stdout
 
+- name: configure zram-swap
+  template:
+    src: zram-swap-config.conf.j2
+    dest: /etc/zram-swap-config.conf
+    owner: root
+    group: root
+    mode: 0640
+
 - name: Cleanup installation files
   ansible.builtin.file:
     path: /tmp/zram-swap-config
@@ -51,3 +60,17 @@
     - dphys-swapfile uninstall
     - /usr/sbin/update-rc.d dphys-swapfile remove
   changed_when: false
+
+- name: enable uninstall
+  become: yes
+  file:
+    path: /usr/local/bin/zram-swap-config-uninstall.sh
+    mode: 0744
+    owner: root
+    group: root
+
+- name: uninstall
+  become: yes
+  command: /usr/local/bin/zram-swap-config-uninstall.sh
+  changed_when: false
+  when: not zram and zram_uninstall

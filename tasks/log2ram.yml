@@ -25,6 +25,7 @@
   ansible.builtin.git:
     repo: 'https://github.com/azlux/log2ram.git'
     dest: /tmp/log2ram
+    version: latest
 
 - name: Install log2ram
   become: yes
@@ -40,7 +41,28 @@
   ansible.builtin.debug:
     var: log2ramres.stdout
 
+- name: configure log2ram
+  template:
+    src: log2ram.conf.j2
+    dest: /etc/log2ram.conf
+    owner: root
+    group: root
+    mode: 0640
+
 - name: Cleanup installation files
   ansible.builtin.file:
     path: /tmp/log2ram
     state: absent
+
+- name: enable uninstall
+  become: yes
+  file:
+    path: /usr/local/bin/uninstall-log2ram.sh
+    mode: 0744
+    owner: root
+    group: root
+
+- name: enable uninstall
+  command: /usr/local/bin/uninstall-log2ram.sh
+  changed_when: false
+  when: not log2ram and log2ram_uninstall
